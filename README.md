@@ -1,4 +1,4 @@
-# Tensor completion based on a new tensor nuclear norm under-linear transform
+# Tensor completion based on a new tensor nuclear norm under linear transforms
 
 In our work [1], we propose a new tensor nuclear norm induced by the tensor-tensor product under linear transforms and apply it to tensor completion. We give the exact recovery guarantees of tensor completion by tensor nuclear norm minimization. This work generalizes our former work [2] which use the discrete Fourier transform in tensor-tensor product.
 
