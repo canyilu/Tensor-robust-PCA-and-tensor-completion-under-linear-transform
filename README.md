@@ -29,7 +29,3 @@ In our work [1], we propose a new tensor nuclear norm induced by the tensor-tens
 <li> Canyi Lu, Jiashi Feng, Yudong Chen, Wei Liu, Zhouchen Lin, Shuicheng Yan. Tensor Robust Principal Component Analysis: Exact Recovery of Corrupted Low-Rank Tensors via Convex Optimization. CVPR, 2016
 </ol>
 
-
-
-
-Low-rank Tensor Completion with a New Tensor Nuclear Norm Induced by Invertible Linear Transforms
