@@ -1,4 +1,4 @@
-# Tensor robust PCA (TRPCA) and tensor completion based on a tensor nuclear norm under linear transform
+# Tensor robust PCA (TRPCA) and tensor completion based on tensor nuclear norm under linear transform
 
 ### Introduction
 
