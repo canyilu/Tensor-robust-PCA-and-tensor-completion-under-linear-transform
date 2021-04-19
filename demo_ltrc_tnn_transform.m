@@ -24,7 +24,7 @@ L = dct(eye(n3));
 % L = RandOrthMat(n3);
 
 X = tprod_transform(randn(n1,r,n3)/n1,randn(r,n2,n3)/n2,L);
-trankX = tubalrank(X,L)
+trankX = tubalrank_transform(X,L)
 
 dr = (n1+n2-r)*r*n3;
 rho = 3
@@ -38,11 +38,11 @@ M(omega) = X(omega);
 opts.DEBUG = 1;
 Xhat = lrtc_tnn_transform(M,L,omega,opts);
 
-trank = tubalrank(Xhat,L);
+trank = tubalrank_transform(Xhat,L);
 RSE = norm(X(:)-Xhat(:))/norm(X(:));
 
 fprintf('\nsampling rate: %f\n', p);
-fprintf('tubal rank of the underlying tensor: %d\n', tubalrank(X,L));
+fprintf('tubal rank of the underlying tensor: %d\n', tubalrank_transform(X,L));
 fprintf('tubal rank of the recovered tensor: %d\n', trank);
 fprintf('relative recovery error: %.4e\n', RSE);
 
