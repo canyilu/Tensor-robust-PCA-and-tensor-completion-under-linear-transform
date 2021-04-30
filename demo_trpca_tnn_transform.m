@@ -2,6 +2,7 @@
 % under linear transform
 %
 % version 1.0 - 04/03/2019
+% version 1.1 - 29/04/2021
 %
 % Written by Canyi Lu (canyilu@gmail.com)
 % 
@@ -14,17 +15,21 @@ addpath(genpath(cd))
 clear
 close all
 
-n1 = 30;
+n1 = 20;
 n2 = n1;
-n3 = n1;
-r = 0.1*n1 % tubal rank
-L1 = randn(n1,r,n3)/n1;
-L2 = randn(r,n2,n3)/n2;
+n3 = 5;
+r = 0.1*n1; % tubal rank
+P = randn(n1,r,n3)/n1;
+Q = randn(r,n2,n3)/n2;
 
-T = dct(eye(n3)); l=1;
-% T = RandOrthMat(n3); l=1;
+% transform.L = @fft; transform.l = n3; transform.inverseL = @ifft;
+transform.L = @dct; transform.l = 1; transform.inverseL = @idct;
+% transform.L = dftmtx(n3); transform.l = n3; % not encourage to use, numerically unstable, may result to complex matrix
+transform.L = dct(eye(n3)); transform.l = 1;
+% % transform.L = RandOrthMat(n3); transform.l = 1;
 
-L = tprod_transform(L1,L2,T);
+L = tprod(P,Q,transform);
+% L = real(L); % uncomment this line if transform dftmtx(n3) is used to avoid very small complex element
 
 p = 0.1;
 m = p*n1*n2*n3;
@@ -38,21 +43,19 @@ E = sign(rand(n1,n2,n3)-0.5);
 S = Omega.*E; % sparse part, or noises. S = P_Omega(E)
 
 Xn = L+S;
-lambda = 1/sqrt(l*max(n1,n2));
+lambda = 1/sqrt(transform.l*max(n1,n2));
 
 opts.tol = 1e-8;
 opts.mu = 1e-4;
 opts.rho = 1.1;
 opts.DEBUG = 1;
 
-tic
-[Lhat,Shat] = trpca_tnn_transform(Xn,T,lambda,opts);
+[Lhat,Shat] = trpca_tnn(Xn,lambda,transform,opts);
 
 Lr = norm(L(:)-Lhat(:))/norm(L(:))
 Sr = norm(S(:)-Shat(:))/norm(S(:))
-rank = r
+rankL = r
+rankLhat = tubalrank(Lhat,transform)
 sparsity = m
 sparsityhat = length(find(Shat~=0))
-
-toc
 
